@@ -1,10 +1,21 @@
 package org.example.homework002.model.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jdk.jfr.DataAmount;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 import java.time.Instant;
 
-public class ApiResponseInstructor<T> {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@JsonInclude
+public class ApiResponse<T> {
     private Boolean success;
     private HttpStatus status;
     private String message;
