@@ -39,4 +39,11 @@ public interface InstructorRepository {
         WHERE instructor_id = #{instructorId} RETURNING *;
     """)
     Instructor putByInstructorId(Long instructorId, @Param("req") InstructorRequest request);
+
+
+    @ResultMap("instructorMapping")
+    @Delete("""
+        DELETE FROM instructors WHERE instructor_id = #{instructorId};
+    """)
+    Instructor deleteById(Long instructorId);
 }

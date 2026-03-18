@@ -1,6 +1,6 @@
 package org.example.homework002.controller;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.example.homework002.model.entity.Instructor;
 import org.example.homework002.model.request.InstructorRequest;
 import org.example.homework002.model.response.ApiResponse;
@@ -50,16 +50,16 @@ public class InstructorController {
     public ResponseEntity<ApiResponse<Instructor>> saveInstructor(@RequestBody InstructorRequest request) {
         ApiResponse<Instructor> apiResponse = ApiResponse.<Instructor>builder()
                 .success(true)
-                .status(HttpStatus.OK)
+                .status(HttpStatus.CREATED)
                 .message("Instructor created successfully")
                 .payload(instructorService.saveInstructor(request))
                 .timestamp(Instant.now())
                 .build();
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+        return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
     }
 
     @PutMapping("/{instructor_id}")
-    public ResponseEntity<ApiResponse<Instructor>> putByInstructorId(@PathVariable("instructor_id") Long instructorId, @org.springframework.web.bind.annotation.RequestBody InstructorRequest request) {
+    public ResponseEntity<ApiResponse<Instructor>> putByInstructorId(@PathVariable("instructor_id") Long instructorId, @RequestBody InstructorRequest request   ) {
         ApiResponse<Instructor> apiResponse = ApiResponse.<Instructor>builder()
                 .success(true)
                 .status(HttpStatus.OK)
@@ -67,7 +67,18 @@ public class InstructorController {
                 .payload(instructorService.putByInstructorId(instructorId, request))
                 .timestamp(Instant.now())
                 .build();
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
 
+    @DeleteMapping("/{instructor_id}")
+    public ResponseEntity<ApiResponse<Instructor>> deleteById(@PathVariable("instructor_id") Long instructorId) {
+        ApiResponse<Instructor> apiResponse = ApiResponse.<Instructor>builder()
+                .success(true)
+                .status(HttpStatus.OK)
+                .message("Instructor deleted successfully")
+                .payload(instructorService.deleteById(instructorId))
+                .timestamp(Instant.now())
+                .build();
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 }

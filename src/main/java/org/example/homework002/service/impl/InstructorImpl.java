@@ -5,6 +5,7 @@ import org.example.homework002.model.request.InstructorRequest;
 import org.example.homework002.repository.InstructorRepository;
 import org.example.homework002.service.InstructorService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -35,6 +36,11 @@ public class InstructorImpl implements InstructorService {
     @Override
     public Instructor putByInstructorId(Long instructorId, InstructorRequest request) {
         return instructorRepository.putByInstructorId(instructorId, request);
+    }
+
+    @Override
+    public Instructor deleteById(Long instructorId) {
+        return instructorRepository.deleteById(instructorId);
     }
 
 
