@@ -10,12 +10,12 @@ import java.util.List;
 public interface InstructorRepository {
 
     @Results(
-            id = "instructorMapping", value = {
+            id = "instructorMapper", value = {
             @Result(property = "instructorId", column = "instructor_id"),
             @Result(property = "name", column = "instructor_name")
             }
     )
-    //    query for select all instructor by using inline query
+
     @Select("""
             select * from instructors offset #{offset} limit #{size}
             """)
@@ -24,16 +24,16 @@ public interface InstructorRepository {
     @Select("""
                 select * from instructors where instructor_id = #{instructorId};
             """)
-    @ResultMap("instructorMapping")
+    @ResultMap("instructorMapper")
     Instructor getInstructorById(Long instructorId);
 
-    @ResultMap("instructorMapping")
+    @ResultMap("instructorMapper")
     @Select("""
                 INSERT INTO instructors VALUES (default, #{req.name}, #{req.email}) RETURNING *;
             """)
     Instructor saveInstructor(@Param("req") InstructorRequest request);
 
-    @ResultMap("instructorMapping")
+    @ResultMap("instructorMapper")
     @Select("""
         UPDATE instructors SET instructor_name = #{req.name}, email = #{req.email}
         WHERE instructor_id = #{instructorId} RETURNING *;
@@ -41,9 +41,9 @@ public interface InstructorRepository {
     Instructor putByInstructorId(Long instructorId, @Param("req") InstructorRequest request);
 
 
-    @ResultMap("instructorMapping")
-    @Delete("""
+    @ResultMap("instructorMapper")
+    @Select("""
         DELETE FROM instructors WHERE instructor_id = #{instructorId};
     """)
-    Instructor deleteById(Long instructorId);
+    void deleteById(Long instructorId);
 }

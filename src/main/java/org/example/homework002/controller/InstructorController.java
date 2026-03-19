@@ -36,14 +36,29 @@ public class InstructorController {
 
     @GetMapping("/{instructor_id}")
     public ResponseEntity<ApiResponse<Instructor>> getInstructorById(@PathVariable("instructor_id") Long instructorId) {
-        ApiResponse<Instructor> apiResponse = ApiResponse.<Instructor>builder()
-                .success(true)
-                .status(HttpStatus.OK)
-                .message("Instructor fetched successfully")
-                .payload(instructorService.getInstructorById(instructorId))
-                .timestamp(Instant.now())
-                .build();
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+
+        ApiResponse<Instructor> apiResponse ;
+        Instructor checkId = instructorService.getInstructorById(instructorId);
+
+        if(!(checkId == null)) {
+            apiResponse = ApiResponse.<Instructor>builder()
+                    .success(true)
+                    .status(HttpStatus.OK)
+                    .message("Instructor fetched successfully")
+                    .payload(instructorService.getInstructorById(instructorId))
+                    .timestamp(Instant.now())
+                    .build();
+            return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+        } else {
+            apiResponse = ApiResponse.<Instructor>builder()
+                    .success(false)
+                    .status(HttpStatus.NOT_FOUND)
+                    .message("Instructor fetched failed")
+//                    .payload(instructorService.getInstructorById(instructorId))
+                    .timestamp(Instant.now())
+                    .build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiResponse);
+        }
     }
 
     @PostMapping
@@ -60,25 +75,56 @@ public class InstructorController {
 
     @PutMapping("/{instructor_id}")
     public ResponseEntity<ApiResponse<Instructor>> putByInstructorId(@PathVariable("instructor_id") Long instructorId, @RequestBody InstructorRequest request   ) {
-        ApiResponse<Instructor> apiResponse = ApiResponse.<Instructor>builder()
-                .success(true)
-                .status(HttpStatus.OK)
-                .message("Instructor updated successfully")
-                .payload(instructorService.putByInstructorId(instructorId, request))
-                .timestamp(Instant.now())
-                .build();
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+        ApiResponse<Instructor> apiResponse;
+        Instructor checkId = instructorService.putByInstructorId(instructorId, request);
+
+        if(!(checkId == null)) {
+            apiResponse = ApiResponse.<Instructor>builder()
+                    .success(true)
+                    .status(HttpStatus.OK)
+                    .message("Instructor updated successfully")
+                    .payload(instructorService.putByInstructorId(instructorId, request))
+                    .timestamp(Instant.now())
+                    .build();
+            return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+        } else {
+            apiResponse = ApiResponse.<Instructor>builder()
+                    .success(false)
+                    .status(HttpStatus.NOT_FOUND)
+                    .message("Instructor updated failed")
+//                    .payload(instructorService.putByInstructorId(instructorId, request))
+                    .timestamp(Instant.now())
+                    .build();
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{instructor_id}")
     public ResponseEntity<ApiResponse<Instructor>> deleteById(@PathVariable("instructor_id") Long instructorId) {
-        ApiResponse<Instructor> apiResponse = ApiResponse.<Instructor>builder()
-                .success(true)
-                .status(HttpStatus.OK)
-                .message("Instructor deleted successfully")
-                .payload(instructorService.deleteById(instructorId))
-                .timestamp(Instant.now())
-                .build();
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+
+        Instructor checkId = instructorService.getInstructorById(instructorId);
+
+        ApiResponse<Instructor> apiResponse;
+
+        if(!(checkId == null)) {
+            instructorService.deleteById(instructorId);
+            apiResponse = ApiResponse.<Instructor>builder()
+                    .success(true)
+                    .status(HttpStatus.OK)
+                    .message("Instructor deleted successfully")
+                    .timestamp(Instant.now())
+                    .build();
+            return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+        }
+        else {
+             apiResponse = ApiResponse.<Instructor>builder()
+                    .success(false)
+                    .status(HttpStatus.NOT_FOUND)
+                    .message("Instructor failed successfully")
+                    .timestamp(Instant.now())
+                    .build();
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        }
     }
+
 }

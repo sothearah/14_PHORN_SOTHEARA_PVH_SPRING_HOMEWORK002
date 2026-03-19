@@ -12,5 +12,4 @@ public class Instructor {
     private Long instructorId;
     private String name;
     private String email;
-
 }

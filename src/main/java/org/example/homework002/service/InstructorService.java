@@ -16,5 +16,5 @@ public interface InstructorService {
 
     Instructor putByInstructorId(Long instructorId, InstructorRequest request);
 
-    Instructor deleteById(Long instructorId);
+    void deleteById(Long instructorId);
 }

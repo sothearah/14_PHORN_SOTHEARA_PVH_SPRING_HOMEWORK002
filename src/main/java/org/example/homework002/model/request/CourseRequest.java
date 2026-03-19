@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CourseRequest {
-    private Long instructorId;
-    private String description;
     private String courseName;
+    private String description;
+    private Long instructorId;
 }

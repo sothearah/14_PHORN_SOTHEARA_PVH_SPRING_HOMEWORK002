@@ -39,8 +39,8 @@ public class InstructorImpl implements InstructorService {
     }
 
     @Override
-    public Instructor deleteById(Long instructorId) {
-        return instructorRepository.deleteById(instructorId);
+    public void deleteById(Long instructorId) {
+        instructorRepository.deleteById(instructorId);
     }
 
 
