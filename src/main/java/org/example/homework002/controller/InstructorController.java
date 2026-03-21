@@ -74,7 +74,7 @@ public class InstructorController {
     }
 
     @PutMapping("/{instructor_id}")
-    public ResponseEntity<ApiResponse<Instructor>> putByInstructorId(@PathVariable("instructor_id") Long instructorId, @RequestBody InstructorRequest request   ) {
+    public ResponseEntity<ApiResponse<Instructor>> putByInstructorId(@PathVariable("instructor_id") Long instructorId, @RequestBody InstructorRequest request) {
         ApiResponse<Instructor> apiResponse;
         Instructor checkId = instructorService.putByInstructorId(instructorId, request);
 

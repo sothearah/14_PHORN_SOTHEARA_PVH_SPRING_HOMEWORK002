@@ -17,8 +17,7 @@ public interface CourseRepository {
             @Result(
                     property = "instructor", column = "instructor_id",
                     one = @One(select = "org.example.homework002.repository.InstructorRepository.getInstructorById")
-            )
-        }
+            )}
     )
     @Select("""
         SELECT * FROM courses OFFSET #{offset} LIMIT #{size};
